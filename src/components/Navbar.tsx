@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <header className="backdrop-blur-2xl flex fixed w-full right-0 top-0 z-50 flex-row justify-between items-center px-4 sm:px-10 md:px-20 py-3 border-b border-black/5">
       <span>
-        <h1 className="font-bold text-sm tracking-tight">Snappy</h1>
+        <h1 className="font-bold text-xl tracking-tight">Snappy</h1>
       </span>
 
       {/* Desktop nav */}
@@ -17,7 +17,7 @@ export default function Navbar() {
             <li key={item}>
               <a
                 href={`#${item.toLowerCase()}`}
-                className="text-sm text-black/60 hover:text-black transition-colors cursor-pointer"
+                className="text-sm text-black/90 hover:text-black transition-colors cursor-pointer"
               >
                 {item}
               </a>

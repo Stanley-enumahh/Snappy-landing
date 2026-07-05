@@ -1,12 +1,15 @@
-import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import SharePage from "./pages/SharePage";
 
 function App() {
   return (
-    <main className="flex flex-col w-full bg-[#f5f5f5]">
-      <Navbar />
-      <Hero />
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/s/:shareId" element={<SharePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
