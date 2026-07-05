@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
-
-// type ScreenshotData = {
-//   file_path: string;
-//   expires_at: string;
-// };
+import { AiFillThunderbolt } from "react-icons/ai";
 
 export default function SharePage() {
   const { shareId } = useParams<{ shareId: string }>();
@@ -86,35 +82,22 @@ export default function SharePage() {
 
   return (
     <PageShell>
-      <div className="w-full max-w-3xl flex flex-col items-center gap-6">
+      <div className="w-full max-w-3xl flex h-screen flex-col items-center gap-6">
         {/* Header */}
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold"
-              style={{
-                background: "linear-gradient(135deg, #3b82f6, #60a5fa)",
-              }}
-            >
-              ⚡
+            <div className="w-7 h-7 bg-blue-700 rounded-lg flex items-center justify-center text-white text-xs font-bold">
+              <AiFillThunderbolt />
             </div>
-            <span
-              className="font-bold text-sm"
-              style={{ color: "var(--text)" }}
-            >
-              Snappy
-            </span>
+            <span className="font-bold text-sm text-black">Snappy</span>
           </div>
-          <span className="text-xs" style={{ color: "var(--muted)" }}>
+          <span className="text-xs text-black/80">
             Expires in {daysLeft} day{daysLeft !== 1 ? "s" : ""}
           </span>
         </div>
 
         {/* Image preview */}
-        <div
-          className="w-full rounded-2xl overflow-hidden border"
-          style={{ borderColor: "var(--border)" }}
-        >
+        <div className="w-full rounded-2xl overflow-hidden">
           <img
             src={imageUrl!}
             alt="Shared screenshot"
@@ -127,8 +110,7 @@ export default function SharePage() {
           <a
             href={imageUrl!}
             download={`snappy-${shareId}.png`}
-            className="px-6 py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #3b82f6, #60a5fa)" }}
+            className="px-6 py-3 rounded-xl text-sm font-semibold bg-black text-white transition-opacity hover:opacity-90"
           >
             Download image
           </a>
