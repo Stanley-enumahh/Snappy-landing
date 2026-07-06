@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { AiFillThunderbolt } from "react-icons/ai";
+import { HiDownload } from "react-icons/hi";
 
 export default function SharePage() {
   const { shareId } = useParams<{ shareId: string }>();
@@ -47,7 +48,7 @@ export default function SharePage() {
   if (status === "loading") {
     return (
       <PageShell>
-        <p className="text-sm" style={{ color: "var(--muted)" }}>
+        <p className="text-sm text-white/50 animate-pulse">
           Loading screenshot...
         </p>
       </PageShell>
@@ -80,24 +81,36 @@ export default function SharePage() {
     (new Date(expiresAt!).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
   );
 
+  async function handleDownload() {
+    if (!imageUrl) return;
+    const res = await fetch(imageUrl);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `snappy-${shareId}.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <PageShell>
-      <div className="w-full max-w-3xl flex h-screen flex-col items-center gap-6">
+      <div className="w-full max-w-3xl flex flex-col items-center gap-6">
         {/* Header */}
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-700 rounded-lg flex items-center justify-center text-white text-xs font-bold">
+            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm">
               <AiFillThunderbolt />
             </div>
-            <span className="font-bold text-sm text-black">Snappy</span>
+            <span className="font-bold text-sm text-white">Snappy</span>
           </div>
-          <span className="text-xs text-black/80">
+          <span className="text-xs text-white/40">
             Expires in {daysLeft} day{daysLeft !== 1 ? "s" : ""}
           </span>
         </div>
 
         {/* Image preview */}
-        <div className="w-full rounded-2xl overflow-hidden">
+        <div className="w-full rounded-2xl overflow-hidden border border-white/10">
           <img
             src={imageUrl!}
             alt="Shared screenshot"
@@ -107,21 +120,16 @@ export default function SharePage() {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <a
-            href={imageUrl!}
-            download={`snappy-${shareId}.png`}
-            className="px-6 py-3 rounded-xl text-sm font-semibold bg-black text-white transition-opacity hover:opacity-90"
+          <button
+            onClick={handleDownload}
+            className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
           >
+            <HiDownload className="text-base" />
             Download image
-          </a>
+          </button>
           <a
             href="/"
-            className="px-6 py-3 rounded-xl text-sm font-medium border transition-opacity hover:opacity-80"
-            style={{
-              color: "var(--text)",
-              borderColor: "var(--border)",
-              background: "var(--panel)",
-            }}
+            className="px-6 py-3 rounded-xl text-sm font-medium border border-white/10 text-white/70 hover:text-white hover:border-white/20 transition-colors"
           >
             Get Snappy free
           </a>
@@ -133,10 +141,7 @@ export default function SharePage() {
 
 function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <main
-      className="min-h-screen flex flex-col items-center justify-center px-6 py-16 gap-6"
-      style={{ background: "var(--bg)" }}
-    >
+    <main className="min-h-screen bg-[#05070d] flex flex-col items-center justify-center px-6 py-16 gap-6">
       {children}
     </main>
   );
@@ -145,22 +150,15 @@ function PageShell({ children }: { children: React.ReactNode }) {
 function Message({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div className="flex flex-col items-center gap-4 text-center">
-      <div
-        className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl"
-        style={{ background: "var(--panel)" }}
-      >
-        ⚡
+      <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-white text-xl">
+        <AiFillThunderbolt />
       </div>
-      <h1 className="text-lg font-semibold" style={{ color: "var(--text)" }}>
-        {title}
-      </h1>
-      <p className="text-sm" style={{ color: "var(--muted)" }}>
-        {subtitle}
-      </p>
+      <h1 className="text-lg font-semibold text-white">{title}</h1>
+      <p className="text-sm text-white/50">{subtitle}</p>
+
       <a
         href="/"
-        className="mt-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white"
-        style={{ background: "var(--accent)" }}
+        className="mt-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
       >
         Get Snappy free
       </a>
