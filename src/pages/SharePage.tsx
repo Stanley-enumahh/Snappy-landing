@@ -141,8 +141,24 @@ export default function SharePage() {
 
 function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen bg-[#05070d] flex flex-col items-center justify-center px-6 py-16 gap-6">
-      {children}
+    <main className="relative min-h-screen overflow-hidden bg-[#05070d] flex flex-col items-center justify-center px-6 py-16 gap-6">
+      {/* Ambient glow blobs */}
+      <div className="pointer-events-none absolute -top-40 -left-40 w-125 h-125 bg-blue-600/20 rounded-full blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 w-125 h-125 bg-indigo-500/20 rounded-full blur-[120px]" />
+
+      {/* Subtle grid overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col items-center gap-6 w-full">
+        {children}
+      </div>
     </main>
   );
 }

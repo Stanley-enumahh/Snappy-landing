@@ -13,7 +13,7 @@ export default function Navbar() {
       {/* Desktop nav */}
       <nav className="hidden md:flex flex-row gap-10 items-center">
         <ul className="flex flex-row gap-6 items-center">
-          {["Home", "Features"].map((item) => (
+          {["Home", "Features", "How-it-works", "Install"].map((item) => (
             <li key={item}>
               <a
                 href={`#${item.toLowerCase()}`}
@@ -66,7 +66,7 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
           >
-            {["Home", "Features"].map((item) => (
+            {["Home", "Features", "How-it-works", "Install"].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
